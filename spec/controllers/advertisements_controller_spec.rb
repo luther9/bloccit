@@ -6,9 +6,14 @@ RSpec.describe AdvertisementsController, type: :controller do
   end
 
   describe "GET #index" do
+    before(:each) {get :index}
+
     it "returns http success" do
-      get :index
       expect(response).to have_http_status(:success)
+    end
+
+    it 'assigns all ads to @advertisements' do
+      expect(assigns :advertisements).to eq [ad]
     end
   end
 

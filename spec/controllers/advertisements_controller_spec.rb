@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe AdvertisementsController, type: :controller do
+  let :ad do
+    Advertisement.create! title: 'Car', body: 'Buy our new Car!', price: 6660
+  end
 
   describe "GET #index" do
     it "returns http success" do
@@ -11,7 +14,7 @@ RSpec.describe AdvertisementsController, type: :controller do
 
   describe "GET #show" do
     it "returns http success" do
-      get :show
+      get :show, id: ad.id
       expect(response).to have_http_status(:success)
     end
   end

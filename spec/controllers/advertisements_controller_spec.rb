@@ -18,9 +18,18 @@ RSpec.describe AdvertisementsController, type: :controller do
   end
 
   describe "GET #show" do
+    before(:each) {get :show, id: ad.id}
+
     it "returns http success" do
-      get :show, id: ad.id
       expect(response).to have_http_status(:success)
+    end
+
+    it 'renders the #show view' do
+      expect(response).to render_template :show
+    end
+
+    it 'assigns ad to @advertisement' do
+      expect(assigns :advertisement).to eq ad
     end
   end
 

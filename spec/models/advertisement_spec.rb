@@ -1,5 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Advertisement, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'attributes' do
+    it 'has title, body, and price attributes' do
+      ad = Advertisement.create! title: 'Car', body: 'Buy our new Car!', price: 666
+      expect(ad).to have_attributes title: 'Car', body: 'Buy our new Car!', price: 666
+    end
+  end
 end

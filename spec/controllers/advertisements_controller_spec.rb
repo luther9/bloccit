@@ -49,10 +49,31 @@ RSpec.describe AdvertisementsController, type: :controller do
     end
   end
 
-  describe "GET #create" do
-    it "returns http success" do
-      get :create
-      expect(response).to have_http_status(:success)
+  describe "POST #create" do
+    before(:each) do
+      post :create, advertisement: {
+        title: RandomData.random_sentence,
+        body: RandomData.random_paragraph,
+        price: rand(1...10000)
+      }
+    end
+
+    it 'increases the number of ads by 1' do
+      expect do
+        post :create, advertisement: {
+          title: RandomData.random_sentence,
+          body: RandomData.random_paragraph,
+          price: rand(1...10000)
+        }
+      end.to change(Advertisement, :count).by 1
+    end
+
+    it 'assigns the new ad to @advertisement' do
+      expect(assigns :advertisement).to eq Advertisement.last
+    end
+
+    it 'redirects to the new ad' do
+      expect(response).to redirect_to Advertisement.last
     end
   end
 

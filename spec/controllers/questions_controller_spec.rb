@@ -6,9 +6,14 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe "GET #edit" do
+    before(:each) {get :edit, id: question.id}
+
     it "returns http success" do
-      get :edit, id: question.id
       expect(response).to have_http_status(:success)
+    end
+
+    it 'renders the #edit view' do
+      expect(response).to render_template :edit
     end
   end
 

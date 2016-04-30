@@ -48,6 +48,10 @@ RSpec.describe QuestionsController, type: :controller do
     it 'renders the #new view' do
       expect(response).to render_template :new
     end
+
+    it 'instantiates @question' do
+      expect(assigns :question).not_to be_nil
+    end
   end
 
   describe "GET #show" do

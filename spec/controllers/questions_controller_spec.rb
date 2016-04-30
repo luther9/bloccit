@@ -27,9 +27,14 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe "GET #index" do
+    before(:each) {get :index}
+
     it "returns http success" do
-      get :index
       expect(response).to have_http_status(:success)
+    end
+
+    it 'assigns [question] to @questions' do
+      expect(assigns :questions).to eq [question]
     end
   end
 

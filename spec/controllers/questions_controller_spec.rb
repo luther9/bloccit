@@ -1,10 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
+  let :question do
+    Question.create! title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: rand(2) == 1
+  end
 
   describe "GET #edit" do
     it "returns http success" do
-      get :edit
+      get :edit, id: question.id
       expect(response).to have_http_status(:success)
     end
   end
@@ -25,7 +28,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe "GET #show" do
     it "returns http success" do
-      get :show
+      get :show, id: question.id
       expect(response).to have_http_status(:success)
     end
   end

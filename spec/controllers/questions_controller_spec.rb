@@ -39,9 +39,14 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe "GET #new" do
+    before(:each) {get :new}
+
     it "returns http success" do
-      get :new
       expect(response).to have_http_status(:success)
+    end
+
+    it 'renders the #new view' do
+      expect(response).to render_template :new
     end
   end
 

@@ -55,9 +55,18 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe "GET #show" do
+    before(:each) {get :show, id: question.id}
+
     it "returns http success" do
-      get :show, id: question.id
       expect(response).to have_http_status(:success)
+    end
+
+    it 'renders the #show view' do
+      expect(response).to render_template :show
+    end
+
+    it 'assigns question to @question' do
+      expect(assigns :question).to eq question
     end
   end
 

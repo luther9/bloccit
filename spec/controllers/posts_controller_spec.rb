@@ -69,7 +69,7 @@ RSpec.describe PostsController, type: :controller do
       expect(assigns :post).to eq Post.last
     end
 
-    it 'rediects to the new post' do
+    it 'redirects to the new post' do
       post :create, post: {
         title: RandomData.random_sentence,
         body: RandomData.random_paragraph

@@ -97,4 +97,37 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to redirect_to Question.last
     end
   end
+
+  describe 'PUT update' do
+    it 'updates questions with expected attributes' do
+      new_title = RandomData.random_sentence
+      new_body = RandomData.random_paragraph
+      new_resolved = rand(2) == 1
+
+      put :update, id: question.id, question: {
+        title: new_title,
+        body: new_body,
+        resolved: new_resolved
+      }
+
+      updated = assigns :question
+      expect(updated.id).to eq question.id
+      expect(updated.title).to eq new_title
+      expect(updated.body).to eq new_body
+      expect(updated.resolved).to eq new_resolved
+    end
+
+    it 'redirects to the updated question' do
+      new_title = RandomData.random_sentence
+      new_body = RandomData.random_paragraph
+      new_resolved = rand(2) == 1
+
+      put :update, id: question.id, question: {
+        title: new_title,
+        body: new_body,
+        resolved: new_resolved
+      }
+      expect(response).to redirect_to question
+    end
+  end
 end

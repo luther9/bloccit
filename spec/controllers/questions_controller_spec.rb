@@ -130,4 +130,17 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to redirect_to question
     end
   end
+
+  describe 'DELETE destroy' do
+    before(:each) {delete :destroy, id: question.id}
+
+    it 'deletes the question' do
+      count = Question.where(id: question.id).size
+      expect(count).to eq 0
+    end
+
+    it 'redirects to question index' do
+      expect(response).to redirect_to questions_path
+    end
+  end
 end

@@ -3,6 +3,13 @@ class User < ActiveRecord::Base
     if email.present?
       self.email = email.downcase
     end
+    if name.present?
+      names = name.split
+      names.each do |n|
+        n.capitalize!
+      end
+      self.name = names.join ' '
+    end
   end
 
   validates :name, length: {minimum: 1, maximum: 100}, presence: true

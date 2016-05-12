@@ -11,4 +11,13 @@ class Post < ActiveRecord::Base
   validates :body, length: {minimum: 20}, presence: true
   validates :topic, presence: true
   validates :user, presence: true
+
+  def self.ordered_by_title
+    order 'title ASC'
+  end
+
+  def self.ordered_by_reverse_created_at
+    # "reverse" means make it different from default_scope.
+    order 'created_at ASC'
+  end
 end

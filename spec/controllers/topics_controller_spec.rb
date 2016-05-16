@@ -274,4 +274,103 @@ RSpec.describe TopicsController, type: :controller do
       end
     end
   end
+
+  context 'moderator user' do
+    before do
+      user = User.create! name: 'Bloccit User', email: 'user@bloccit.com', password: 'helloworld', role: :moderator
+      create_session user
+    end
+
+    describe 'GET index' do
+      before :each do
+        get :index
+      end
+
+      it 'returns http success' do
+        expect(response).to have_http_status :success
+      end
+
+      it 'assigns Topic.all to topic' do
+        expect(assigns :topics).to eq [my_topic]
+      end
+    end
+
+    describe 'GET show' do
+      before :each do
+        get :show, id: my_topic.id
+      end
+
+      it 'returns http success' do
+        expect(response).to have_http_status :success
+      end
+
+      it 'renders the #show view' do
+        expect(response).to render_template :show
+      end
+
+      it 'assigns my_topic to @topic' do
+        expect(assigns :topic).to eq my_topic
+      end
+    end
+
+    describe 'GET new' do
+      it 'returns http redirect' do
+        get :new
+        expect(response).to redirect_to topics_path
+      end
+    end
+
+    describe 'POST create' do
+      it 'returns http redirect' do
+        post :create, topic: {name: RandomData.random_sentence, description: RandomData.random_paragraph}
+        expect(response).to redirect_to topics_path
+      end
+    end
+
+    describe 'GET edit' do
+      before(:each) { get :edit, id: my_topic }
+
+      it 'returns http success' do
+        expect(response).to have_http_status :success
+      end
+
+      it 'renders the #edit view' do
+        expect(response).to render_template :edit
+      end
+
+      it 'assigns topic to be updated to @topic' do
+        topic_instance = assigns :topic
+
+        expect(topic_instance.id).to eq my_topic.id
+        expect(topic_instance.name).to eq my_topic.name
+        expect(topic_instance.description).to eq my_topic.description
+      end
+    end
+
+    describe 'PUT update' do
+      let(:new_name) {RandomData.random_sentence}
+      let(:new_description) {RandomData.random_paragraph}
+      before :each do
+        put :update, id: my_topic.id, topic: {name: new_name, description: new_description}
+      end
+
+      it 'updates topic with expected attributes' do
+        updated_topic = assigns :topic
+        expect(updated_topic.id).to eq my_topic.id
+        expect(updated_topic.name).to eq new_name
+        expect(updated_topic.description).to eq new_description
+      end
+
+      it 'redirects to the updated topic' do
+        expect(response).to redirect_to my_topic
+      end
+    end
+
+    describe 'DELETE destroy' do
+      it 'returns http redirect' do
+        delete :destroy, id: my_topic.id
+        expect(response).to redirect_to topics_path
+      end
+    end
+  end
 end

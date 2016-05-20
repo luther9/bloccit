@@ -12,9 +12,19 @@ RSpec.describe Post, type: :model do
   let(:post) {topic.posts.create! title: title, body: body, user: user}
 
   it do
+    is_expected.to have_many :labelings
+  end
+  it do
+    is_expected.to have_many(:labels).through :labelings
+  end
+
+  it do
     is_expected.to have_many :comments
   end
   it { is_expected.to belong_to :topic }
+  it do
+    is_expected.to belong_to :user
+  end
 
   it {is_expected.to validate_presence_of :title}
   it {is_expected.to validate_presence_of :body}

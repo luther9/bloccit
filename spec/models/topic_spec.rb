@@ -7,6 +7,12 @@ RSpec.describe Topic, type: :model do
   let(:topic) { Topic.create! name: name, description: description }
 
   it { is_expected.to have_many :posts }
+  it do
+    is_expected.to have_many :labelings
+  end
+  it do
+    is_expected.to have_many(:labels).through :labelings
+  end
 
   describe 'attributes' do
     it 'has name, description, and public attributes' do

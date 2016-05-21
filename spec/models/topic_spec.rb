@@ -13,6 +13,9 @@ RSpec.describe Topic, type: :model do
   it do
     is_expected.to have_many(:labels).through :labelings
   end
+  it {
+    is_expected.to have_many :comments
+  }
 
   describe 'attributes' do
     it 'has name, description, and public attributes' do

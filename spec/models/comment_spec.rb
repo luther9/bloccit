@@ -17,6 +17,9 @@ RSpec.describe Comment, type: :model do
   it do
     is_expected.to belong_to :post
   end
+  it {
+    is_expected.to belong_to :topic
+  }
   it do
     is_expected.to belong_to :user
   end

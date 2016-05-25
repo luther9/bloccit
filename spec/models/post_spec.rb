@@ -41,6 +41,12 @@ RSpec.describe Post, type: :model do
     it 'has title, body, and user attributes' do
       expect(post).to have_attributes title: title, body: body, user: user
     end
+
+    it('gets an automatic upvote from the user') {
+      expect(post.votes.count).to eq 1
+      expect(post.points).to eq 1
+      expect(post.votes[0].user).to eq user
+    }
   end
 
   describe("voting") {

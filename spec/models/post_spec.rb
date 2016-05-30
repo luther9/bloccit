@@ -24,6 +24,9 @@ RSpec.describe Post, type: :model do
   it {
     is_expected.to have_many :votes
   }
+  it {
+    is_expected.to have_many :favorites
+  }
   it { is_expected.to belong_to :topic }
   it do
     is_expected.to belong_to :user

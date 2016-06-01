@@ -39,7 +39,8 @@ class Post < ActiveRecord::Base
   private
 
   def make_favorite
+    # Tried with both `create!` and `create`.
     Favorite.create! post: self, user: user
-    FavoriteMailer.new_post user, self
+    FavoriteMailer.new_post(self).deliver_now
   end
 end

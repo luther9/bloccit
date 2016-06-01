@@ -95,4 +95,10 @@ RSpec.describe Post, type: :model do
       }
     }
   }
+
+  describe('after_create') {
+    it('sends an email to users who create a post') {
+
+    }
+  }
 end

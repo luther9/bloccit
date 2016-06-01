@@ -1,0 +1,8 @@
+You have made a new post: "<%=@post.title%>"
+<%='=' * (@post.title.length + 12)%>
+
+<%=@post.body%>
+
+You have favorited this post and will be notified of any comments.
+
+Visit online at: <%=topic_post_url(@post.topic, @post)%>

@@ -11,6 +11,9 @@ RSpec.describe FavoritesController, type: :controller do
   let(:my_post) {
     my_topic.posts.create! title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user
   }
+  let(:other_user) {
+    User.create! name: "other User", email: "other@bloccit.com", password: "helloworld"
+  }
 
   context('guest user') {
     describe('POST create') {
@@ -41,11 +44,12 @@ RSpec.describe FavoritesController, type: :controller do
       }
 
       it('creates a favorite for the current user and specified post') {
-        expect(my_user.favorites.find_by_post_id my_post.id).to be_nil
+        create_session other_user
+        expect(other_user.favorites.find_by_post_id my_post.id).to be_nil
 
         post :create, post_id: my_post.id
 
-        expect(my_user.favorites.find_by_post_id my_post.id).not_to be_nil
+        expect(other_user.favorites.find_by_post_id my_post.id).not_to be_nil
       }
     }
 
@@ -57,8 +61,8 @@ RSpec.describe FavoritesController, type: :controller do
       }
 
       it('destroys the favorite for the current user and post') {
-        favorite = my_user.favorites.where(post: my_post).create
-        expect(my_user.favorites.find_by_post_id my_post.id).not_to be_nil
+        favorite = my_user.favorites.find_by(post: my_post.id)
+        expect(favorite).not_to be_nil
 
         delete :destroy, post_id: my_post.id, id: favorite.id
 

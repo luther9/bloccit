@@ -94,14 +94,17 @@ RSpec.describe User, type: :model do
       topic = Topic.create! name: RandomData.random_sentence, description: RandomData.random_paragraph
       @post = topic.posts.create! title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user
     }
+    let(:other_user) {
+      User.create! name: 'other User', email: 'other@bloccit.com', password: 'password'
+    }
 
     it("returns `nil` if the user has not favorited the post") {
-      expect(user.favorite_for @post).to be_nil
+      expect(other_user.favorite_for @post).to be_nil
     }
 
     it("returns the appropriate favorite if it exists") {
-      favorite = user.favorites.where(post: @post).create
-      expect(user.favorite_for @post).to eq favorite
+      favorite = other_user.favorites.where(post: @post).create
+      expect(other_user.favorite_for @post).to eq favorite
     }
   }
 end

@@ -59,4 +59,25 @@ RSpec.describe UsersController, type: :controller do
       expect(session[:user_id]).to eq assigns(:user).id
     end
   end
+
+  describe("not signed in") {
+    let(:factory_user) { create :user }
+
+    before {
+      post :create, user: new_user_attributes
+      get :show, id: factory_user.id
+    }
+
+    it("returns http success") {
+      expect(response).to have_http_status :success
+    }
+
+    it("renders the #show view") {
+      expect(response).to render_template :show
+    }
+
+    it("assigns factory_user to @user") {
+      expect(assigns :user).to eq factory_user
+    }
+  }
 end

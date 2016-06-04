@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe LabelsController, type: :controller do
-  let :my_label do
-    Label.create! name: 'L1'
-  end
+  let(:my_label) { create :label }
 
   describe "GET #show" do
     before :each do

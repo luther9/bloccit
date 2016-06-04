@@ -3,18 +3,10 @@ include RandomData
 include SessionsHelper
 
 RSpec.describe PostsController, type: :controller do
-  let :my_user do
-    User.create! name: "Bloccit User", email: "user@bloccit.com", password: "helloworld"
-  end
-  let :other_user do
-    User.create! name: RandomData.random_name, email: RandomData.random_email, password: 'helloworld', role: :member
-  end
-  let :my_topic do
-    Topic.create! name: RandomData.random_sentence, description: RandomData.random_paragraph
-  end
-  let :my_post do
-    my_topic.posts.create! title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user
-  end
+  let(:my_user) { create :user }
+  let(:other_user) { create :user }
+  let(:my_topic) { create :topic }
+  let(:my_post) { create :post, topic: my_topic, user: my_user }
 
   context 'guest' do
     describe 'GET show' do

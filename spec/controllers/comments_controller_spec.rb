@@ -2,21 +2,13 @@ require 'rails_helper'
 include SessionsHelper
 
 RSpec.describe CommentsController, type: :controller do
-  let(:my_user) do
-    User.create! name: 'Bloccit User', email: 'user@bloccit.com', password: 'helloworld'
-  end
+  let(:my_user) { create :user }
   let(:other_user) do
     User.create! name: RandomData.random_name, email: RandomData.random_email, password: 'helloworld', role: :member
   end
-  let(:my_topic) do
-    Topic.create! name: RandomData.random_sentence, description: RandomData.random_paragraph
-  end
-  let(:my_post) do
-    my_topic.posts.create! title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user
-  end
-  let(:my_comment) do
-    Comment.create! body: 'Comment Body', post: my_post, user: my_user
-  end
+  let(:my_topic) { create :topic }
+  let(:my_post) { create :post, topic: my_topic }
+  let(:my_comment) { create :comment, user: my_user, post: my_post }
 
   context 'guest' do
     describe 'POST create' do

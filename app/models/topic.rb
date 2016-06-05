@@ -14,4 +14,8 @@ class Topic < ActiveRecord::Base
   scope :publicly_viewable, -> {
     where public: true
   }
+
+  scope :privately_viewable, -> {
+    where public: false
+  }
 end

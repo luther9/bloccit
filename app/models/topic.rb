@@ -7,7 +7,7 @@ class Topic < ActiveRecord::Base
     if user
       all
     else
-      where public: true
+      publicly_viewable
     end
   }
 

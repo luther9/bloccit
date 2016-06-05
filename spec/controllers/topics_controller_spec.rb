@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe TopicsController, type: :controller do
-  let :my_topic do
-    Topic.create! name: RandomData.random_sentence, description: RandomData.random_paragraph
-  end
+  let(:my_topic) { create :topic }
+  let(:my_private_topic) { create :topic, public: false }
 
   context 'guest' do
     describe 'GET index' do
@@ -18,22 +17,30 @@ RSpec.describe TopicsController, type: :controller do
       it 'assigns Topic.all to topic' do
         expect(assigns :topics).to eq [my_topic]
       end
+
+      it("does not include private topics in @topics") {
+        expect(assigns :topics).not_to include my_private_topic
+      }
     end
 
     describe 'GET show' do
-      before :each do
-        get :show, id: my_topic.id
-      end
+      it("redirects from private topics") {
+        get :show, id: my_private_topic.id
+        expect(response).to redirect_to new_session_path
+      }
 
       it 'returns http success' do
+        get :show, id: my_topic.id
         expect(response).to have_http_status :success
       end
 
       it 'renders the #show view' do
+        get :show, id: my_topic.id
         expect(response).to render_template :show
       end
 
       it 'assigns my_topic to @topic' do
+        get :show, id: my_topic.id
         expect(assigns :topic).to eq my_topic
       end
     end
@@ -93,7 +100,7 @@ RSpec.describe TopicsController, type: :controller do
       end
 
       it 'assigns Topic.all to topic' do
-        expect(assigns :topics).to eq [my_topic]
+        expect(assigns :topics).to eq [my_topic, my_private_topic]
       end
     end
 
@@ -168,7 +175,7 @@ RSpec.describe TopicsController, type: :controller do
       end
 
       it 'assigns Topic.all to topics' do
-        expect(assigns :topics).to eq [my_topic]
+        expect(assigns :topics).to eq [my_topic, my_private_topic]
       end
     end
 

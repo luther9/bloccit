@@ -10,4 +10,8 @@ class Topic < ActiveRecord::Base
       where public: true
     end
   }
+
+  scope :publicly_viewable, -> {
+    where public: true
+  }
 end

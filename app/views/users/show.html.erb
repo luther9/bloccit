@@ -9,11 +9,15 @@
         </div>
       <%end%>
       <div class="media-body">
-        <h2 class="media-heading"><%=@user.name%></h2>
-        <small>
-          <%=pluralize @user.posts.count, 'post'%>,
-          <%=pluralize @user.comments.count, 'comment'%>
-        </small>
+        <%if @user.posts_or_comments?%>
+          <h2 class="media-heading"><%=@user.name%></h2>
+          <small>
+            <%=pluralize @user.posts.count, 'post'%>,
+            <%=pluralize @user.comments.count, 'comment'%>
+          </small>
+        <%else%>
+          <%="{user.name} has not submitted any posts yet."%>
+        <%end%>
       </div>
     </div>
   </div>

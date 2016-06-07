@@ -20,4 +20,11 @@ Rails.application.routes.draw do
   get 'about' => 'welcome#about'
 
   root 'welcome#index'
+
+  namespace(:api) {
+    namespace(:v1) {
+      resources :users, only: [:index, :show]
+      resources :topics, only: [:index, :show]
+    }
+  }
 end

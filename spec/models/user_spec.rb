@@ -113,4 +113,10 @@ RSpec.describe User, type: :model do
       expect(known_user.avatar_url 48).to eq expected_gravatar
     }
   }
+
+  describe("#generate_auth_token") {
+    it("creates a token") {
+      expect(user.auth_token).to_not be_nil
+    }
+  }
 end

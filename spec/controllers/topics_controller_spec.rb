@@ -14,7 +14,7 @@ RSpec.describe TopicsController, type: :controller do
         expect(response).to have_http_status :success
       end
 
-      it 'assigns Topic.all to topic' do
+      it 'assigns Topic.all to topics' do
         expect(assigns :topics).to eq [my_topic]
       end
 

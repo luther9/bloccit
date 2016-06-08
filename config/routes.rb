@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
   namespace(:api) {
     namespace(:v1) {
-      resources :users, only: [:index, :show]
+      resources :users, only: [:index, :show, :create, :update]
       resources :topics, only: [:index, :show]
     }
   }

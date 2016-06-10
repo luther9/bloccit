@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe(Api::V1::PostsController, type: :controller) {
   let!(:my_topic) {create :topic}
-  let!(:my_post) {create :post, topic: my_topic}
+  let!(:my_user) {create :user}
+  let!(:my_post) {create :post, topic: my_topic, user: my_user}
   before {
     @new_post = build :post
   }
@@ -28,7 +29,7 @@ RSpec.describe(Api::V1::PostsController, type: :controller) {
 
   describe("POST create") {
     before {
-      post :create, post: {title: @new_post.title, body: @new_post.body}
+      post :create, topic_id: my_topic.id, user_id: my_user.id, post: {title: @new_post.title, body: @new_post.body}
     }
 
     it("returns http success") {

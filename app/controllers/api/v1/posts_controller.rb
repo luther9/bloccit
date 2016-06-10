@@ -11,10 +11,12 @@ class Api::V1::PostsController < Api::V1::BaseController
 
   def create
     post = Post.new post_params
+    post.user_id = params[:user_id]
+    post.topic_id = params[:topic_id]
 
     if post.valid?
-      topic.save!
-      render json: topic, status: 201
+      post.save!
+      render json: post, status: 201
     else
       render json: {error: 'Post is invalid', status: 400}, status: 400
     end

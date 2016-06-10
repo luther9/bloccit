@@ -63,7 +63,7 @@ RSpec.describe(Api::V1::PostsController, type: :controller) {
 
     it('deletes my_post') {
       expect {
-        Topic.find my_post.id
+        Post.find my_post.id
       }.to raise_exception ActiveRecord::RecordNotFound
     }
   }
